@@ -1,0 +1,22 @@
+
+# Maven build files
+target/
+
+# VS Code settings
+.vscode/
+
+# Java compiled files
+*.class
+
+# Environment variables and secrets
+.env
+.env.*
+*.properties
+
+# Temporary files
+*.log
+*.tmp
+
+# Operating system files
+.DS_Store
+Thumbs.db

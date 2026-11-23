@@ -7,6 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Project Name : SplitMate - Group Budget Planner
+ * Module       : Expense Management and Splitting
+ * Developed By : Dhani
+ * Date         : 20-11-2026
+ */
+
 public class ExpenseDAO {
 
     // Add expense

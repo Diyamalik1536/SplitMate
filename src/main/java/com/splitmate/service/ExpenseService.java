@@ -7,6 +7,13 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+/*
+ * Project Name : SplitMate - Group Budget Planner
+ * Module       : Expense Management and Splitting
+ * Developed By : Dhani
+ * Date         : 20-11-2026
+ */
+
 public class ExpenseService {
 
     private final ExpenseDAO expenseDAO = new ExpenseDAO();

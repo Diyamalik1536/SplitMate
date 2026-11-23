@@ -3,6 +3,13 @@ package com.splitmate.service;
 
 import java.math.BigDecimal;
 
+/*
+ * Project Name : SplitMate - Group Budget Planner
+ * Module       : Budget tracking and reports
+ * Developed By : Gitanshi
+ * Date         : 22-11-2026
+ */
+
 public class BudgetAlert {
 
     private final BudgetService budgetService = new BudgetService();

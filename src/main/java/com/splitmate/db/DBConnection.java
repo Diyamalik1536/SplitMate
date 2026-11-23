@@ -22,7 +22,17 @@ public class DBConnection {
     public static Connection getConnection(String password)
             throws SQLException {
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException(
+                "MySQL JDBC driver not found. Check Maven dependencies.",
+                e
+            );
+        }
+
         return DriverManager.getConnection(
-                URL, USER, password);
+                URL, USER, password
+        );
     }
 }

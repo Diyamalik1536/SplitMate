@@ -9,6 +9,15 @@ import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+/*
+ * Project Name : SplitMate - Group Budget Planner
+ * Module       : Budget tracking and reports
+ * Developed By : Gitanshi
+ * Date         : 22-11-2026
+ */
+
+
 public class ConcurrentExpenseDemo {
 
     public static void main(String[] args) {

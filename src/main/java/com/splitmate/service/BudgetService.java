@@ -9,6 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*
+ * Project Name : SplitMate - Group Budget Planner
+ * Module       : Budget tracking and reports
+ * Developed By : Gitanshi
+ * Date         : 22-11-2026
+ */
+
+
 public class BudgetService {
 
     // Get the group's total budget

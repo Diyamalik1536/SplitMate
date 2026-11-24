@@ -3,6 +3,13 @@ package com.splitmate.model;
 
 import java.math.BigDecimal;
 
+/*
+ * Project Name : SplitMate - Group Budget Planner
+ * Module       : Expense Management and Splitting
+ * Developed By : Dhani
+ * Date         : 20-11-2026
+ */
+
 public class Expense {
 
     private int expenseId;

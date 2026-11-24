@@ -7,10 +7,12 @@ import java.sql.SQLException;
 
 /*
  * Project Name : SplitMate - Group Budget Planner
+ * Name         : Diya Malik
  * Module       : Database Connection (Shared)
  * Date         : 17-11-2026
  * Evaluation   : 1
  */
+
 
 public class DBConnection {
 

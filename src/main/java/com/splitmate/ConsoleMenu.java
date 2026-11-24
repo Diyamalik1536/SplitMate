@@ -2,6 +2,8 @@
 package com.splitmate;
 
 import com.splitmate.dao.GroupDAO;
+import com.splitmate.dao.UserDAO;
+import com.splitmate.model.User;
 import com.splitmate.service.GroupService;
 import com.splitmate.service.ExpenseService;
 import com.splitmate.service.BudgetService;
@@ -10,6 +12,8 @@ import com.splitmate.service.CategoryReport;
 import com.splitmate.split.EqualSplit;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,6 +29,9 @@ import java.util.Scanner;
  * Group Management - Diya
  * Expense Management & Equal Split - Dhani
  * Budget Analytics, Alerts & Category Report - Gitanshi
+ * User Management - Pranjal
+ *
+ * User Management Integration: 24-11-2026
  */
 
 public class ConsoleMenu {
@@ -40,6 +47,7 @@ public class ConsoleMenu {
     public void showMenu(String password) {
 
         Scanner scanner = new Scanner(System.in);
+        UserDAO userDAO = new UserDAO(password);
 
         while (true) {
 
@@ -55,7 +63,10 @@ public class ConsoleMenu {
             System.out.println("9. View Budget Summary");
             System.out.println("10. Check Budget Alerts");
             System.out.println("11. View Category Expense Report");
-            System.out.println("12. Exit");
+            System.out.println("12. Add User");
+            System.out.println("13. View All Users");
+            System.out.println("14. Find User by ID");
+            System.out.println("15. Exit");
             System.out.println("===============================");
             System.out.print("Enter your choice: ");
 
@@ -251,7 +262,111 @@ public class ConsoleMenu {
                         break;
                     }
 
+                    // User Management Integration
+
                     case "12": {
+                        System.out.print("Enter user name: ");
+                        String name = scanner.nextLine().trim();
+
+                        System.out.print("Enter email: ");
+                        String email = scanner.nextLine().trim();
+
+                        if (name.isEmpty()) {
+                            System.out.println(
+                                    "User name cannot be empty!");
+                            break;
+                        }
+
+                        if (name.length() > 100) {
+                            System.out.println(
+                                    "User name cannot exceed 100 characters!");
+                            break;
+                        }
+
+                        if (email.length() > 255 ||
+                                !email.matches(
+                                        "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) {
+
+                            System.out.println(
+                                    "Please enter a valid email address!");
+                            break;
+                        }
+
+                        if (userDAO.emailExists(email)) {
+                            System.out.println(
+                                    "Email already exists!");
+                            break;
+                        }
+
+                        User user = new User(name, email);
+
+                        int userId = userDAO.addUser(user);
+
+                        if (userId > 0) {
+                            System.out.println(
+                                    "User added successfully!");
+                            System.out.println(
+                                    "Generated User ID: " + userId);
+                        } else {
+                            System.out.println(
+                                    "User addition failed.");
+                        }
+
+                        break;
+                    }
+
+                    case "13": {
+                        System.out.println("\n--- All Users ---");
+
+                        List<User> users = userDAO.getAllUsers();
+
+                        if (users.isEmpty()) {
+                            System.out.println("No users found.");
+                            break;
+                        }
+
+                        for (User user : users) {
+                            System.out.println("--------------------");
+                            System.out.println(
+                                    "User ID: " + user.getUserId());
+                            System.out.println(
+                                    "Name: " + user.getName());
+                            System.out.println(
+                                    "Email: " + user.getEmail());
+                        }
+
+                        break;
+                    }
+
+                    case "14": {
+                        System.out.print("Enter user ID: ");
+
+                        int userId =
+                                Integer.parseInt(scanner.nextLine().trim());
+
+                        if (userId <= 0) {
+                            System.out.println("Invalid user ID!");
+                            break;
+                        }
+
+                        User user = userDAO.getUserById(userId);
+
+                        if (user == null) {
+                            System.out.println("User not found.");
+                        } else {
+                            System.out.println("\n--- User Details ---");
+                            System.out.println(
+                                    "User ID: " + user.getUserId());
+                            System.out.println(
+                                    "Name: " + user.getName());
+                            System.out.println(
+                                    "Email: " + user.getEmail());
+                        }
+
+                        break;
+                    }
+
+                    case "15": {
                         System.out.println(
                                 "Thank you for using SplitMate!");
                         return;
@@ -268,6 +383,14 @@ public class ConsoleMenu {
 
             } catch (IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
+
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println(
+                        "Database constraint violation: " + e.getMessage());
+
+            } catch (SQLException e) {
+                System.out.println(
+                        "Database error: " + e.getMessage());
             }
         }
     }
